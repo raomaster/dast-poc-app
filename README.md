@@ -9,8 +9,19 @@ Esta es una aplicación de demostración desarrollada con FastAPI que contiene v
 ## Vulnerabilidades implementadas
 
 - **SQL Injection**: El endpoint `/users/search` utiliza una consulta SQL vulnerable que permite inyección.
-- **Configuración insegura**: CORS configurado para permitir cualquier origen (`*`).
-- **Headers de seguridad insuficientes**: Se implementa un middleware básico de headers de seguridad.
+  - Ejemplo de explotación: `?username=a'%20OR%201=1%20--%20`
+
+- **Cross-Site Scripting (XSS)**: El endpoint `/render` muestra contenido HTML sin sanitizar.
+  - Ejemplo de explotación: `?content=<script>alert('XSS')</script>`
+
+- **Path Traversal**: El endpoint `/files/{file_path}` permite acceder a archivos fuera del directorio permitido.
+  - Ejemplo de explotación: `/files/../../../etc/passwd`
+
+- **Configuración insegura de CORS**: Configurado para permitir cualquier origen (`*`).
+
+- **Headers de seguridad insuficientes**: Faltan headers importantes como Content-Security-Policy.
+
+- **Secretos hardcodeados**: Clave JWT predeterminada en el código si no se configura en variables de entorno.
 
 ## Requisitos
 
