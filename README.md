@@ -1,20 +1,70 @@
-# Vulnerable FastAPI Demo (SQLite, JWT, SQLi endpoint)
+# DAST POC App - Aplicación FastAPI Vulnerable
 
-> ⚠️ For training only. Intentionally vulnerable.
+> ⚠️ **ADVERTENCIA**: Esta aplicación contiene vulnerabilidades intencionales para pruebas de seguridad. NO usar en entornos de producción.
 
-See `requirements.txt` and run `uvicorn app.main:app --reload` after `pip install -r requirements.txt`.
+## Descripción
 
+Esta es una aplicación de demostración desarrollada con FastAPI que contiene vulnerabilidades intencionales para pruebas de Dynamic Application Security Testing (DAST). La aplicación implementa un sistema básico de autenticación con JWT y almacenamiento en SQLite.
 
-# GitHub Codespaces ♥️ Flask
+## Vulnerabilidades implementadas
 
-Welcome to your shiny new Codespace running Flask! We've got everything fired up and running for you to explore Flask.
+- **SQL Injection**: El endpoint `/users/search` utiliza una consulta SQL vulnerable que permite inyección.
+- **Configuración insegura**: CORS configurado para permitir cualquier origen (`*`).
+- **Headers de seguridad insuficientes**: Se implementa un middleware básico de headers de seguridad.
 
-You've got a blank canvas to work on from a git perspective as well. There's a single initial commit with the what you're seeing right now - where you go from here is up to you!
+## Requisitos
 
-Everything you do here is contained within this one codespace. There is no repository on GitHub yet. If and when you’re ready you can click "Publish Branch" and we’ll create your repository and push up your project. If you were just exploring then and have no further need for this code then you can simply delete your codespace and it's gone forever.
+- Python 3.8+
+- uv (gestor de paquetes y entorno virtual)
 
-To run this application:
+## Instalación
+
+1. Clona este repositorio
+2. Instala las dependencias:
+
+```bash
+uv sync
+```
+
+## Configuración del entorno
+
+Crea un archivo `.env` basado en `env.example` con las siguientes variables:
 
 ```
-flask --debug run
+JWT_SECRET=tu_clave_secreta
+JWT_ALG=HS256
+JWT_EXPIRE_MINUTES=120
+DATABASE_URL=sqlite:///./app.db
 ```
+## Ejecución
+
+Para ejecutar la aplicación en modo desarrollo:
+
+```bash
+uv run uvicorn app.main:app --reload
+```
+
+La aplicación estará disponible en: http://localhost:8000
+
+## Documentación API
+
+La documentación interactiva de la API estará disponible en:
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+
+## Endpoints principales
+
+- `/auth/login` - Autenticación de usuarios (POST)
+- `/users` - Listar todos los usuarios (GET)
+- `/users/search` - Buscar usuarios (GET, vulnerable a SQL Injection)
+- `/me` - Información del usuario actual (GET, requiere autenticación)
+- `/notes` - Gestión de notas (GET, POST, requiere autenticación)
+
+## Credenciales de prueba
+
+- Usuario: `alice`, Contraseña: `password123`
+- Usuario: `bob`, Contraseña: `hunter2`
+
+## Notas de seguridad
+
+Esta aplicación contiene vulnerabilidades intencionales para fines educativos y de prueba. No debe utilizarse en entornos de producción ni exponerse públicamente.
