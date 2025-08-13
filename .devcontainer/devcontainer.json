@@ -4,21 +4,21 @@
     "cpus": 4
   },
   "waitFor": "onCreateCommand",
-  "updateContentCommand": "pip install -r requirements.txt",
+  "updateContentCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && source $HOME/.cargo/env && uv sync",
   "postCreateCommand": "",
   "postAttachCommand": {
-    "server": "flask --debug run"
+    "server": "source $HOME/.cargo/env && uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
   },
   "portsAttributes": {
-    "5000": {
-      "label": "Application",
+    "8000": {
+      "label": "FastAPI Application",
       "onAutoForward": "openPreview"
     }
   },
   "customizations": {
     "codespaces": {
       "openFiles": [
-        "templates/index.html"
+        "app/main.py"
       ]
     },
     "vscode": {
@@ -27,5 +27,5 @@
       ]
     }
   },
-  "forwardPorts": [5000]
+  "forwardPorts": [8000]
 }

@@ -1,3 +1,10 @@
+# Vulnerable FastAPI Demo (SQLite, JWT, SQLi endpoint)
+
+> ⚠️ For training only. Intentionally vulnerable.
+
+See `requirements.txt` and run `uvicorn app.main:app --reload` after `pip install -r requirements.txt`.
+
+
 # GitHub Codespaces ♥️ Flask
 
 Welcome to your shiny new Codespace running Flask! We've got everything fired up and running for you to explore Flask.
